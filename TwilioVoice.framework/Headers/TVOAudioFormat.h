@@ -10,48 +10,57 @@
 /**
  *  Audio Sample Rate 8000 Hz
  */
-extern uint32_t const TVOAudioSampleRate8000;
+extern uint32_t const TVOAudioSampleRate8000
+NS_SWIFT_NAME(AudioFormat.SampleRate8000);
 
 /**
  *  Audio Sample Rate 16000 Hz
  */
-extern uint32_t const TVOAudioSampleRate16000;
+extern uint32_t const TVOAudioSampleRate16000
+NS_SWIFT_NAME(AudioFormat.SampleRate16000);
 
 /**
  *  Audio Sample Rate 24000 Hz
  */
-extern uint32_t const TVOAudioSampleRate24000;
+extern uint32_t const TVOAudioSampleRate24000
+NS_SWIFT_NAME(AudioFormat.SampleRate24000);
 
 /**
  *  Audio Sample Rate 32000 Hz
  */
-extern uint32_t const TVOAudioSampleRate32000;
+extern uint32_t const TVOAudioSampleRate32000
+NS_SWIFT_NAME(AudioFormat.SampleRate32000);
 
 /**
  *  Audio Sample Rate 44100 Hz
  */
-extern uint32_t const TVOAudioSampleRate44100;
+extern uint32_t const TVOAudioSampleRate44100
+NS_SWIFT_NAME(AudioFormat.SampleRate44100);
 
 /**
  *  Audio Sample Rate 48000 Hz
  */
-extern uint32_t const TVOAudioSampleRate48000;
+extern uint32_t const TVOAudioSampleRate48000
+NS_SWIFT_NAME(AudioFormat.SampleRate48000);
 
 /**
  *  Mono audio channels
  */
-extern size_t const TVOAudioChannelsMono;
+extern size_t const TVOAudioChannelsMono
+NS_SWIFT_NAME(AudioFormat.ChannelsMono);
 
 /**
  *  Stereo audio channels
  */
-extern size_t const TVOAudioChannelsStereo;
+extern size_t const TVOAudioChannelsStereo
+NS_SWIFT_NAME(AudioFormat.ChannelsStereo);
 
 
 /**
  *  TVOAudioFormat describes audio that is captured or rendered via a `TVOAudioDevice`. The class also offers
  *  convenience methods to help interoperate with CoreAudio and size your audio buffers appropriately.
  */
+NS_SWIFT_NAME(AudioFormat)
 @interface TVOAudioFormat : NSObject
 
 /**

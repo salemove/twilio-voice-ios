@@ -10,6 +10,7 @@
 /**
  * `TVOLocalTrackStats` represents stats common to local tracks.
  */
+NS_SWIFT_NAME(LocalTrackStats)
 @interface TVOLocalTrackStats : TVOBaseTrackStats
 
 /**

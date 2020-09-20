@@ -10,6 +10,7 @@
 /**
  * `TVOAudioCodec` is the base class for all supported audio codecs.
  */
+NS_SWIFT_NAME(AudioCodec)
 @interface TVOAudioCodec : NSObject
 
 /**

@@ -10,6 +10,7 @@
 /**
  * `TVORemoteTrackStats` represents stats common to remote tracks.
  */
+NS_SWIFT_NAME(RemoteTrackStats)
 @interface TVORemoteTrackStats : TVOBaseTrackStats
 
 /**

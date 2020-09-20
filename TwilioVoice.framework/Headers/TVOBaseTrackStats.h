@@ -8,6 +8,7 @@
 /**
  * `TVOBaseTrackStats` represents stats common to both local and remote tracks.
  */
+NS_SWIFT_NAME(BaseTrackStats)
 @interface TVOBaseTrackStats : NSObject
 
 /**

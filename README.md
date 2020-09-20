@@ -10,7 +10,7 @@ The SDK can be integrated either manually, or via Carthage or CocoaPods. Please 
 
 ## Usage
 
-* Sample code: Get up and running with our [Swift 3.0](https://github.com/twilio/voice-quickstart-swift/) or [Objective-C](https://github.com/twilio/voice-quickstart-objc) Quickstarts.
+* Sample code: Get up and running with our [quickstart](https://github.com/twilio/voice-quickstart-ios).
 * API docs: Check out full API documentation [here](https://twilio.github.io/twilio-voice-ios/docs/latest/).
 
 ## Need help?

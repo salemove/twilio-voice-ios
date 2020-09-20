@@ -46,7 +46,8 @@ typedef NS_ENUM(NSUInteger, TVOLogLevel) {
     TVOLogLevelDebug,       ///< Show debugging messages as well as all **Info** log messages.
     TVOLogLevelTrace,       ///< Show low-level debugging messages as well as all **Debug** log messages.
     TVOLogLevelAll          ///< Show all logging.
-};
+}
+NS_SWIFT_NAME(TwilioVoice.LogLevel);
 
 /**
  * `TwilioVoice` logging modules.
@@ -56,7 +57,8 @@ typedef NS_ENUM(NSUInteger, TVOLogModule) {
     TVOLogModulePlatform,   ///< Voice iOS SDK.
     TVOLogModuleSignaling,  ///< Signaling module.
     TVOLogModuleWebRTC      ///< WebRTC module.
-};
+}
+NS_SWIFT_NAME(TwilioVoice.LogModule);
 
 /**
  * `TwilioVoice` is the entry point to the Twilio Voice SDK. You can register for VoIP push notifications, make outgoing
@@ -88,23 +90,10 @@ typedef NS_ENUM(NSUInteger, TVOLogModule) {
    available edges. `roaming` requires the upstream DNS to support [RFC7871](https://tools.ietf.org/html/rfc7871). See [Global Low Latency requirements](https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#global-low-latency-requirements) for more information.
  
    `edge` value must be specified before calling TwilioVoice.handleNotification().
- 
-   Note: The SDK will throw the `NSInvalidArgumentException` exception if both `edge` and `region` values are specified.
 
    See the [new Edge names](https://www.twilio.com/docs/voice/client/regions#regions) for possible values.
  */
 @property (nonatomic, copy, class, nonnull) NSString *edge;
-
-/**
- * @brief Defines the region (Twilio data center) used for media and signaling traffic.
- *
- * @discussion The default region uses Global Low Latency routing, which establishes a connection with the closest
- * region to the user. If you are specifying a region via the `TwilioVoice.region` property you must do so before
- * `[TwilioVoice connectWithAccessToken:delegate:]` or `[TwilioVoice handleNotification:delegate:delegateQueue:]` is called.
- *
- * Note: The SDK will throw the `NSInvalidArgumentException` exception if both `edge` and `region` values are specified.
- */
-@property (nonatomic, copy, class, nonnull) NSString *region DEPRECATED_MSG_ATTRIBUTE("Use the `edge` property to specify the region and edge for the SDK to connect to the Twilio service.");
 
 /**
  *  @brief The `TVOAudioDevice` used to record and playback audio in a Call.
@@ -251,7 +240,7 @@ typedef NS_ENUM(NSUInteger, TVOLogModule) {
     didUpdatePushCredentials:(PKPushCredentials *)credentials
              forType:(NSString *)type {
         [TwilioVoice registerWithAccessToken:accessToken
-                             deviceTokenData:credentials.token
+                                 deviceToken:credentials.token
                                   completion:^(NSError *error) {
             if(error != nil) {
                 NSLog("Failed to register for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
@@ -266,135 +255,13 @@ typedef NS_ENUM(NSUInteger, TVOLogModule) {
   in not being able to place or receive calls.
 
   @param accessToken Twilio Access Token.
-  @param deviceTokenData The push registry token raw data for Apple VoIP Service.
+  @param deviceToken The push registry token raw data for Apple VoIP Service.
   @param completion Callback block to receive the result of the registration.
 */
 + (void)registerWithAccessToken:(nonnull NSString *)accessToken
-                deviceTokenData:(nonnull NSData *)deviceTokenData
+                    deviceToken:(nonnull NSData *)deviceToken
                      completion:(nullable void(^)(NSError * __nullable error))completion
-NS_SWIFT_NAME(register(withAccessToken:deviceToken:completion:));
-
-/**
-   @brief Registers for Twilio VoIP push notifications.
- 
-   @discussion Registering for push notifications is required to receive incoming call notification messages through Twilio's
-   infrastructure. Once successfully registered, the registered binding has a time-to-live(TTL) of 1 year. If the registered binding
-   is inactive for 1 year it is deleted and push notifications to the registered identity will not succeed. However, whenever
-   the registered binding is used to reach the registered identity the TTL is reset to 1 year. A successful registration will
-   ensure that push notifications will arrive via the APNs for the lifetime of the registration device token provided by
-   the APNs instance.
- 
-   If the registration is successful the completion handler will contain a `Null NSError`. If the registration
-   fails, the completion handler will have a `nonnull NSError` with `UserInfo` string describing the reason for failure.
- 
-   <table border="1" summary="Registration Errors.">
-   <tr>
-   <td>Registration Error</td><td>Error Code</td><td>Description</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenInvalidError </td><td>20101</td><td>Twilio was unable to validate your Access Token</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenHeaderInvalidError </td><td>20102</td><td>Invalid Access Token header</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenIssuerInvalidError </td><td>20103</td><td>Invalid Access Token issuer or subject</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenExpiredError </td><td>20104</td><td>Access Token has expired or expiration date is invalid</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenNotYetValidError </td><td>20105</td><td>Access Token not yet valid</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenGrantsInvalidError </td><td>20106</td><td>Invalid Access Token grants</td>
-   </tr>
-   <tr>
-   <td> TVOErrorExpirationTimeExceedsMaxTimeAllowedError </td><td>20157</td><td>Expiration Time in the Access Token Exceeds Maximum Time Allowed</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessForbiddenError </td><td>20403</td><td>Forbidden. The account lacks permission to access the Twilio API</td>
-   </tr>
-   <tr>
-   <td> TVOErrorBadRequestError </td><td>31400</td><td>Bad Request. The request could not be understood due to malformed syntax</td>
-   </tr>
-   <tr>
-   <td> TVOErrorForbiddenError </td><td>31403</td><td>Forbidden. The server understood the request, but is refusing to fulfill it</td>
-   </tr>
-   <tr>
-   <td> TVOErrorNotFoundError </td><td>31404</td><td>Not Found. The server has not found anything matching the request</td>
-   </tr>
-   <tr>
-   <td> TVOErrorRequestTimeoutError </td><td>31408</td><td>Request Timeout. A request timeout occurred</td>
-   </tr>
-   <tr>
-   <td> TVOErrorConflictError </td><td>31409</td><td>Conflict. The request could not be processed because of a conflict in the current state of the resource. Another request may be in progress</td>
-   </tr>
-   <tr>
-   <td> TVOErrorUpgradeRequiredError </td><td>31426</td><td>Upgrade Required. This error is raised when an HTTP 426 response is received. The reason for this is most likely because of an incompatible TLS version. To mitigate this, you may need to upgrade the OS or download a more recent version of the SDK.</td>
-   </tr>
-   <tr>
-   <td> TVOErrorTooManyRequestsError </td><td>31429</td><td>Too Many Requests. Too many requests were sent in a given amount of time</td>
-   </tr>
-   <tr>
-   <td> TVOErrorInternalServerError </td><td>31500</td><td>Internal Server Error. The server could not fulfill the request due to some unexpected condition</td>
-   </tr>
-   <tr>
-   <td> TVOErrorBadGatewayError </td><td>31502</td><td>Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request</td>
-   </tr>
-   <tr>
-   <td> TVOErrorServiceUnavailableError </td><td>31503</td><td>Service Unavailable. The server is currently unable to handle the request due to a temporary overloading or maintenance of the server</td>
-   </tr>
-   <tr>
-   <td> TVOErrorGatewayTimeoutError </td><td>31504</td><td>Gateway Timeout. The server, while acting as a gateway or proxy, did not receive a timely response from an upstream server</td>
-   </tr>
-   <tr>
-   <td> TVOErrorTokenAuthenticationRejected </td><td>51007</td><td>Token authentication is rejected by authentication service</td>
-   </tr>
-   <tr>
-   <td> TVOErrorRegistrationError </td><td>31301</td><td>Registration failed. Look at [error localizedFailureReason] for details</td>
-   </tr>
-   </table>
- 
-   **Insights**
- 
-   <table border="1" summary="Insights events.">
-   <tr>
-   <td>Group Name</td><td>Event Name</td><td>Description</td><td>Since version</td>
-   </tr>
-   <tr>
-   <td>registration</td><td>registration</td><td>Registration is successful</td><td>3.0.0-beta3</td>
-   </tr>
-   <tr>
-   <td> registration </td> <td>registration-error</td><td>Registration failed</td><td>3.0.0-beta3</td>
-   </tr>
-   </table>
- 
-   ** An example of using the *registration* API **
- 
-   ```
-    [TwilioVoice registerWithAccessToken:accessToken
-        deviceToken:deviceToken
-        completion:^(NSError *error) {
-            if(error != nil) {
-                NSLog("Failed to register for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
-            } else {
-                NSLog("Registration successful");
-            }
-    }];
-   ```
- 
-   The maximum number of characters for the identity provided in the token is 121. The identity may only contain alpha-numeric
-   and underscore characters. Other characters, including spaces, or exceeding the maximum number of characters, will result
-   in not being able to place or receive calls.
- 
-   @param accessToken Twilio Access Token.
-   @param deviceToken The push registry token for Apple VoIP Service.
-   @param completion Callback block to receive the result of the registration.
- */
-+ (void)registerWithAccessToken:(nonnull NSString *)accessToken
-                    deviceToken:(nonnull NSString *)deviceToken
-                     completion:(nullable void(^)(NSError * __nullable error))completion DEPRECATED_MSG_ATTRIBUTE("Use `[TwilioVoice registerWithAccessToken:deviceTokenData:completion:]` and provide a credentials.token instead.");
+NS_SWIFT_NAME(register(accessToken:deviceToken:completion:));
 
 /**
    @brief Unregisters from Twilio VoIP push notifications.
@@ -491,7 +358,7 @@ NS_SWIFT_NAME(register(withAccessToken:deviceToken:completion:));
  
    ```
      [TwilioVoice unregisterWithAccessToken:accessToken
-                            deviceTokenData:deviceToken
+                                deviceToken:deviceToken
                                  completion:^(NSError *error) {
          if(error != nil) {
              NSLog("Failed to unregister for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
@@ -506,130 +373,13 @@ NS_SWIFT_NAME(register(withAccessToken:deviceToken:completion:));
    in not being able to place or receive calls.
  
    @param accessToken Twilio Access Token.
-   @param deviceTokenData The push registry token raw data for Apple VoIP Service.
+   @param deviceToken The push registry token raw data for Apple VoIP Service.
    @param completion Callback block to receive the result of the unregistration.
  */
 + (void)unregisterWithAccessToken:(nonnull NSString *)accessToken
-                  deviceTokenData:(nonnull NSData *)deviceTokenData
+                      deviceToken:(nonnull NSData *)deviceToken
                        completion:(nullable void(^)(NSError * __nullable error))completion
-NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
-
-/**
-   @brief Unregisters from Twilio VoIP push notifications.
- 
-   @discussion Call this method when you no longer want to receive push notifications for incoming Calls.
- 
-   If the unregistration is successful the completion handler will contain a `Null NSError`. If the unregistration
-   fails, the completion handler will have a `nonnull NSError` with `UserInfo` string describing the reason for failure.
- 
-   <table border="1" summary="Registration Errors.">
-   <tr>
-   <td>Registration Error</td><td>Error Code</td><td>Description</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenInvalidError </td><td>20101</td><td>Twilio was unable to validate your Access Token</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenHeaderInvalidError </td><td>20102</td><td>Invalid Access Token header</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenIssuerInvalidError </td><td>20103</td><td>Invalid Access Token issuer or subject</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenExpiredError </td><td>20104</td><td>Access Token has expired or expiration date is invalid</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenNotYetValidError </td><td>20105</td><td>Access Token not yet valid</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessTokenGrantsInvalidError </td><td>20106</td><td>Invalid Access Token grants</td>
-   </tr>
-   <tr>
-   <td> TVOErrorExpirationTimeExceedsMaxTimeAllowedError </td><td>20157</td><td>Expiration Time in the Access Token Exceeds Maximum Time Allowed</td>
-   </tr>
-   <tr>
-   <td> TVOErrorAccessForbiddenError </td><td>20403</td><td>Forbidden. The account lacks permission to access the Twilio API</td>
-   </tr>
-   <tr>
-   <td> TVOErrorBadRequestError </td><td>31400</td><td>Bad Request. The request could not be understood due to malformed syntax</td>
-   </tr>
-   <tr>
-   <td> TVOErrorForbiddenError </td><td>31403</td><td>Forbidden. The server understood the request, but is refusing to fulfill it</td>
-   </tr>
-   <tr>
-   <td> TVOErrorNotFoundError </td><td>31404</td><td>Not Found. The server has not found anything matching the request</td>
-   </tr>
-   <tr>
-   <td> TVOErrorRequestTimeoutError </td><td>31408</td><td>Request Timeout. A request timeout occurred</td>
-   </tr>
-   <tr>
-   <td> TVOErrorConflictError </td><td>31409</td><td>Conflict. The request could not be processed because of a conflict in the current state of the resource. Another request may be in progress</td>
-   </tr>
-   <tr>
-   <td> TVOErrorUpgradeRequiredError </td><td>31426</td><td>Upgrade Required. This error is raised when an HTTP 426 response is received. The reason for this is most likely because of an incompatible TLS version. To mitigate this, you may need to upgrade the OS or download a more recent version of the SDK</td>
-   </tr>
-   <tr>
-   <td> TVOErrorTooManyRequestsError </td><td>31429</td><td>Too Many Requests. Too many requests were sent in a given amount of time</td>
-   </tr>
-   <tr>
-   <td> TVOErrorInternalServerError </td><td>31500</td><td>Internal Server Error. The server could not fulfill the request due to some unexpected condition</td>
-   </tr>
-   <tr>
-   <td> TVOErrorBadGatewayError </td><td>31502</td><td>Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request</td>
-   </tr>
-   <tr>
-   <td> TVOErrorServiceUnavailableError </td><td>31503</td><td>Service Unavailable. The server is currently unable to handle the request due to a temporary overloading or maintenance of the server</td>
-   </tr>
-   <tr>
-   <td> TVOErrorGatewayTimeoutError </td><td>31504</td><td>Gateway Timeout. The server, while acting as a gateway or proxy, did not receive a timely response from an upstream server</td>
-   </tr>
-   <tr>
-   <td> TVOErrorTokenAuthenticationRejected </td><td>51007</td><td>Token authentication is rejected by authentication service</td>
-   </tr>
-   <tr>
-   <td> TVOErrorRegistrationError </td><td>31301</td><td>Registration failed. Look at [error localizedFailureReason] for details</td>
-   </tr>
-   </table>
- 
-   **Insights**
- 
-   <table border="1" summary="Insights events.">
-   <tr>
-   <td>Group Name</td><td>Event Name</td><td>Description</td><td>Since version</td>
-   </tr>
-   <tr>
-   <td>registration</td><td>unregistration</td><td>Unregistration is successful</td><td>3.0.0-beta3</td>
-   </tr>
-   <tr>
-   <td>registration</td><td>unregistration-error</td><td>Unregistration failed</td><td>3.0.0-beta3</td>
-   </tr>
-   </table>
- 
-   ** An example of using the *unregistration* API **
- 
-   ```
-    [TwilioVoice unregisterWithAccessToken:accessToken
-        deviceToken:deviceToken
-        completion:^(NSError *error) {
-            if(error != nil) {
-                NSLog("Failed to unregister for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
-            } else {
-                NSLog("Unregistration successful");
-            }
-    }];
-   ```
- 
-   The maximum number of characters for the identity provided in the token is 121. The identity may only contain alpha-numeric
-   and underscore characters. Other characters, including spaces, or exceeding the maximum number of characters, will result
-   in not being able to place or receive calls.
- 
-   @param accessToken Twilio Access Token.
-   @param deviceToken The push registry token for Apple VoIP Service.
-   @param completion Callback block to receive the result of the unregistration.
- */
-+ (void)unregisterWithAccessToken:(nonnull NSString *)accessToken
-                      deviceToken:(nonnull NSString *)deviceToken
-                       completion:(nullable void(^)(NSError * __nullable error))completion DEPRECATED_MSG_ATTRIBUTE("Use `[TwilioVoice unregisterWithAccessToken:deviceTokenData:completion:]` and provide a credentials.token instead.");
+NS_SWIFT_NAME(unregister(accessToken:deviceToken:completion:));
 
 /**
    @brief Processes an incoming VoIP push notification payload.
@@ -637,7 +387,7 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    @discussion This method will synchronously process call notification payload and call the provided delegate
    on the same dispatch queue.
  
-   @discussion If you are specifying a region via the `TwilioVoice.region` property you must do so before calling this method.
+   @discussion If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
  
    Twilio sends a `call` notification via Apple VoIP Service.
    The notification type is encoded in the dictionary with the key `twi_message_type` and the value
@@ -738,7 +488,7 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    @discussion This method is guaranteed to return a `<TVOCall>` object. It's possible for the returned Call to either
    succeed or fail to connect.
  
-   If you are specifying a region via the `TwilioVoice.region` property you must do so before calling this method.
+   If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
  
    The `<TVOCallDelegate>` will receive the Call state update callbacks. The callbacks are listed here.
  
@@ -891,6 +641,9 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    <tr>
    <td>TVOErrorMediaConnectionError</td><td>53405</td><td>Media connection failed</td>
    </tr>
+   <tr>
+   <td>TVOMediaDtlsTransportFailedErrorCode</td><td>53407</td><td>Media connection failed due to DTLS handshake failure</td>
+   </tr>
    </table>
  
    **Insights**
@@ -973,7 +726,8 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    @see TVOCallDelegate
  */
 + (nonnull TVOCall *)connectWithAccessToken:(nonnull NSString *)accessToken
-                                   delegate:(nonnull id<TVOCallDelegate>)delegate;
+                                   delegate:(nonnull id<TVOCallDelegate>)delegate
+NS_SWIFT_NAME(connect(accessToken:delegate:));
 
 /**
    @brief Make an outgoing Call.
@@ -981,7 +735,7 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    @discussion This method is guaranteed to return a `<TVOCall>` object. It's possible for the returned Call to either
    succeed or fail to connect. Use the `<TVOConnectOptions>` builder to specify Call parameters and UUID.
  
-   @discussion If you are specifying a region via the `TwilioVoice.region` property you must do so before calling this method.
+   @discussion If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
  
    The `<TVOCallDelegate>` will receive the Call state update callbacks. The callbacks are same as `connectWithAccessToken:delegate:` API.
  
@@ -1024,7 +778,7 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
  
     // ViewController setup and other code ...
  
-    - (void)makeCall:(NSString *)accessToken uuid:(NSString *)uuid region:(NSString *)region to:(NSString *)phoneNumber
+    - (void)makeCall:(NSString *)accessToken uuid:(NSString *)uuid to:(NSString *)phoneNumber
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
  
         if ([to length] > 0) {
@@ -1076,7 +830,8 @@ NS_SWIFT_NAME(unregister(withAccessToken:deviceToken:completion:));
    @see TVOConnectOptions
  */
 + (nonnull TVOCall *)connectWithOptions:(nonnull TVOConnectOptions *)options
-                               delegate:(nonnull id<TVOCallDelegate>)delegate;
+                               delegate:(nonnull id<TVOCallDelegate>)delegate
+NS_SWIFT_NAME(connect(options:delegate:));
 
 - (null_unspecified instancetype)init __attribute__((unavailable("TwilioVoice cannot be instantiated directly.")));
 

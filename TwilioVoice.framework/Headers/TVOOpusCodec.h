@@ -12,6 +12,7 @@
  *
  * @see [Opus](https://en.wikipedia.org/wiki/Opus_(audio_format))
  */
+NS_SWIFT_NAME(OpusCodec)
 @interface TVOOpusCodec : TVOAudioCodec
 
 /**

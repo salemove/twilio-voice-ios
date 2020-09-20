@@ -14,6 +14,7 @@
  * The `TVOCallInvite` object represents an incoming Call Invite. `TVOCallInvite`s are not created directly;
  * they are returned by the `<[TVONotificationDelegate callInviteReceived:]>` delegate method.
  */
+NS_SWIFT_NAME(CallInvite)
 @interface TVOCallInvite : NSObject
 
 /**
@@ -196,6 +197,9 @@
    <tr>
    <td>TVOErrorMediaConnectionError</td><td>53405</td><td>Media connection failed</td>
    </tr>
+   <tr>
+   <td>TVOMediaDtlsTransportFailedErrorCode</td><td>53407</td><td>Media connection failed due to DTLS handshake failure</td>
+   </tr>
    </table>
  
    **Insights**
@@ -349,7 +353,8 @@
    @see TVOAcceptOptions
    @see TVOCallDelegate
  */
-- (nonnull TVOCall *)acceptWithOptions:(nonnull TVOAcceptOptions *)options delegate:(nonnull id<TVOCallDelegate>)delegate;
+- (nonnull TVOCall *)acceptWithOptions:(nonnull TVOAcceptOptions *)options delegate:(nonnull id<TVOCallDelegate>)delegate
+NS_SWIFT_NAME(accept(options:delegate:));
 
 /**
    @brief Rejects the incoming Call Invite.

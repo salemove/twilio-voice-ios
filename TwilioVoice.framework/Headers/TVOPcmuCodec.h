@@ -12,6 +12,7 @@
  *
  * @see [PCMU](https://en.wikipedia.org/wiki/G.711)
  */
+NS_SWIFT_NAME(PcmuCodec)
 @interface TVOPcmuCodec : TVOAudioCodec
 
 /**

@@ -13,11 +13,13 @@
 typedef NS_ENUM(NSUInteger, TVOIceTransportPolicy) {
     TVOIceTransportPolicyAll = 0,   ///< All transports will be used.
     TVOIceTransportPolicyRelay = 1  ///< Only TURN relay transports will be used.
-};
+}
+NS_SWIFT_NAME(IceOptions.IceTransportPolicy);
 
 /**
  *  `TVOIceServer` is a single STUN or TURN server.
  */
+NS_SWIFT_NAME(IceServer)
 @interface TVOIceServer : NSObject
 
 /**
@@ -76,6 +78,7 @@ typedef NS_ENUM(NSUInteger, TVOIceTransportPolicy) {
  *  be fetched for you based upon how the Call was created. For Client created Calls the default Call settings
  *  are used, while settings are provided on a per-Call basis when creating Calls using the REST API.
  */
+NS_SWIFT_NAME(IceOptionsBuilder)
 @interface TVOIceOptionsBuilder : NSObject
 
 /**
@@ -97,7 +100,8 @@ typedef NS_ENUM(NSUInteger, TVOIceTransportPolicy) {
  *
  *  @param builder The builder
  */
-typedef void (^TVOIceOptionsBuilderBlock)(TVOIceOptionsBuilder * _Nonnull builder);
+typedef void (^TVOIceOptionsBuilderBlock)(TVOIceOptionsBuilder * _Nonnull builder)
+NS_SWIFT_NAME(IceOptionsBuilder.Block);
 
 /**
  *  `TVOIceOptions` specifies custom media connectivity configurations.
@@ -107,6 +111,7 @@ typedef void (^TVOIceOptionsBuilderBlock)(TVOIceOptionsBuilder * _Nonnull builde
  *  You may also provide your own ICE servers, overriding the defaults.
  *  https://www.twilio.com/stun-turn
  */
+NS_SWIFT_NAME(IceOptions)
 @interface TVOIceOptions : NSObject
 
 /**

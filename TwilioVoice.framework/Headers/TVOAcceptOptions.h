@@ -24,6 +24,7 @@
      let call = callInvite.accept(with: acceptOptions, delegate: self)
    ```
  */
+NS_SWIFT_NAME(AcceptOptionsBuilder)
 @interface TVOAcceptOptionsBuilder : TVOCallOptionsBuilder
 
 - (null_unspecified instancetype)init __attribute__((unavailable("Use [TVOAcceptOptions optionsWithCallInvite:] or [TVOAcceptOptions optionsWithCallInvite:block:] to create a `TVOAcceptOptions` instance.")));
@@ -35,7 +36,8 @@
  *
  *  @param builder The builder
  */
-typedef void (^TVOAcceptOptionsBuilderBlock)(TVOAcceptOptionsBuilder * _Nonnull builder);
+typedef void (^TVOAcceptOptionsBuilderBlock)(TVOAcceptOptionsBuilder * _Nonnull builder)
+NS_SWIFT_NAME(AcceptOptionsBuilder.Block);
 
 /**
    @brief `TVOAcceptOptions` represents a custom configuration to use when accepting an incoming Call.
@@ -53,6 +55,7 @@ typedef void (^TVOAcceptOptionsBuilderBlock)(TVOAcceptOptionsBuilder * _Nonnull 
  
    @see TVOCallOptions
  */
+NS_SWIFT_NAME(AcceptOptions)
 @interface TVOAcceptOptions : TVOCallOptions
 
 - (null_unspecified instancetype)init __attribute__((unavailable("Use [TVOAcceptOptions optionsWithCallInvite:] or [TVOAcceptOptions optionsWithCallInvite:block:] to create a `TVOAcceptOptions` instance.")));

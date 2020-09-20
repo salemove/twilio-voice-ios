@@ -23,6 +23,7 @@
      let call = TwilioVoice.connect(with: connectOptions, delegate: callDelegate)
    ```
  */
+NS_SWIFT_NAME(ConnectOptionsBuilder)
 @interface TVOConnectOptionsBuilder : TVOCallOptionsBuilder
 
 /**
@@ -44,7 +45,8 @@
  *
  *  @param builder The builder
  */
-typedef void (^TVOConnectOptionsBuilderBlock)(TVOConnectOptionsBuilder * _Nonnull builder);
+typedef void (^TVOConnectOptionsBuilderBlock)(TVOConnectOptionsBuilder * _Nonnull builder)
+NS_SWIFT_NAME(ConnectOptionsBuilder.Block);
 
 /**
    @brief `TVOConnectOptions` represents a custom configuration to use when connecting a Call.
@@ -62,6 +64,7 @@ typedef void (^TVOConnectOptionsBuilderBlock)(TVOConnectOptionsBuilder * _Nonnul
  
    @see TVOCallOptions
  */
+NS_SWIFT_NAME(ConnectOptions)
 @interface TVOConnectOptions : TVOCallOptions
 
 /**

@@ -10,6 +10,7 @@
 /**
  * `TVORemoteAudioTrackStats` represents stats about a remote audio track.
  */
+NS_SWIFT_NAME(RemoteAudioTrackStats)
 @interface TVORemoteAudioTrackStats : TVORemoteTrackStats
 
 /**

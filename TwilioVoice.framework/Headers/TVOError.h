@@ -8,12 +8,13 @@
 #ifndef TVOError_h
 #define TVOError_h
 
-FOUNDATION_EXPORT NSString * _Nonnull const kTVOErrorDomain;
+FOUNDATION_EXPORT NSString * _Nonnull const kTVOErrorDomain
+NS_SWIFT_NAME(TwilioVoice.ErrorDomain);
 
 /**
  * An enumeration indicating the errors that can be raised by the SDK.
  */
-typedef NS_ENUM (NSInteger, TVOError) {
+typedef NS_ERROR_ENUM(kTVOErrorDomain, TVOError) {
     TVOErrorAccessTokenInvalidError                       = 20101,    ///< Invalid Access Token
     TVOErrorAccessTokenHeaderInvalidError                 = 20102,    ///< Invalid Access Token header
     TVOErrorAccessTokenIssuerInvalidError                 = 20103,    ///< Invalid Access Token issuer/subject
@@ -64,6 +65,8 @@ typedef NS_ENUM (NSInteger, TVOError) {
     TVOErrorMediaServerRemoteDescFailedError              = 53403,    ///< Server is unable to apply a remote media description
     TVOErrorMediaNoSupportedCodecError                    = 53404,    ///< No supported codec
     TVOErrorMediaConnectionError                          = 53405,    ///< Media connection failed
-};
+    TVOMediaDtlsTransportFailedErrorCode                  = 53407,    ///< Media connection failed due to DTLS handshake failure
+}
+NS_SWIFT_NAME(TwilioVoice.Error);
 
 #endif

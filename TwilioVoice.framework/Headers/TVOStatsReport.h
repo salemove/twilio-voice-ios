@@ -13,6 +13,7 @@
 /**
  * `TVOStatsReport` contains stats for all tracks associated with a single peer connection.
  */
+NS_SWIFT_NAME(StatsReport)
 @interface TVOStatsReport : NSObject
 
 /**

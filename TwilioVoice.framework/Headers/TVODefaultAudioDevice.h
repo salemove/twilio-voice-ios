@@ -15,12 +15,14 @@ static double const kTVODefaultAudioDeviceSampleRateSimulator = 48000;
 /**
  *  `TVOAVAudioSessionConfigurationBlock` allows you to configure AVAudioSession.
  */
-typedef void (^TVOAVAudioSessionConfigurationBlock)(void);
+typedef void (^TVOAVAudioSessionConfigurationBlock)(void)
+NS_SWIFT_NAME(DefaultAudioDevice.AVAudioSessionConfigurationBlock);
 
 /**
  *  `kTVODefaultAVAudioSessionConfigurationBlock` configures AVAudioSession with the default values for a bidirectional
  *  VOIP audio call.
  */
+NS_SWIFT_NAME(DefaultAudioDevice.DefaultAVAudioSessionConfigurationBlock)
 static TVOAVAudioSessionConfigurationBlock _Nonnull kTVODefaultAVAudioSessionConfigurationBlock = ^() {
     AVAudioSession *session = [AVAudioSession sharedInstance];
 
@@ -91,6 +93,7 @@ static TVOAVAudioSessionConfigurationBlock _Nonnull kTVODefaultAVAudioSessionCon
 /**
  *  `TVODefaultAudioDevice` allows you to record and playback audio when you are connected to a Call.
  */
+NS_SWIFT_NAME(DefaultAudioDevice)
 @interface TVODefaultAudioDevice : NSObject <TVOAudioDevice>
 
 /**
@@ -107,7 +110,7 @@ static TVOAVAudioSessionConfigurationBlock _Nonnull kTVODefaultAVAudioSessionCon
 
       TwilioVoice.audioDevice = audioDevice;
 
-      //...connect to a Call with audioDevice. By default the audio route will be configured to speaker.
+      //...connect to a Call with audioDevice. By default the audio route will be configured to receiver.
 
       audioDevice.block =  ^ {
           // We will execute `kTVODefaultAVAudioSessionConfigurationBlock` first.
@@ -116,11 +119,7 @@ static TVOAVAudioSessionConfigurationBlock _Nonnull kTVODefaultAVAudioSessionCon
           // Overwrite the audio route
           AVAudioSession *session = [AVAudioSession sharedInstance];
           NSError *error = nil;
-          if (![session setMode:AVAudioSessionModeVoiceChat error:&error]) {
-              NSLog(@"AVAudiosession setMode %@",error);
-          }
-
-          if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
+          if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
               NSLog(@"AVAudiosession overrideOutputAudioPort %@",error);
           }
       };

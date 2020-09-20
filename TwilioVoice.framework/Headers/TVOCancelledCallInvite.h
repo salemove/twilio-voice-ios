@@ -11,6 +11,7 @@
  * The `TVOCancelledCallInvite` object represents a cancelled incoming Call Invite. `TVOCancelledCallInvite`s are not created directly;
  * they are returned by the `<[TVONotificationDelegate cancelledCallInviteReceived:error:]>` delegate method.
  */
+NS_SWIFT_NAME(CancelledCallInvite)
 @interface TVOCancelledCallInvite : NSObject
 
 /**

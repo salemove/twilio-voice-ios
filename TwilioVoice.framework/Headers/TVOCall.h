@@ -17,7 +17,8 @@ typedef NS_ENUM(NSUInteger, TVOCallState) {
     TVOCallStateConnected,      ///< The Call is connected.
     TVOCallStateReconnecting,   ///< The Call is reconnecting.
     TVOCallStateDisconnected    ///< The Call is disconnected.
-};
+}
+NS_SWIFT_NAME(Call.State);
 
 /**
  * Available scores for Call quality feedback.
@@ -29,7 +30,8 @@ typedef NS_ENUM(NSUInteger, TVOCallFeedbackScore) {
     TVOCallFeedbackScoreThreePoints,     ///< Average call quality, manageable with some noise/minor packet loss.
     TVOCallFeedbackScoreFourPoints,      ///< Good call quality, minor issues.
     TVOCallFeedbackScoreFivePoints       ///< Great call quality. No issues.
-};
+}
+NS_SWIFT_NAME(Call.FeedbackScore);
 
 /**
  * Available issues for Call quality feedback.
@@ -42,7 +44,8 @@ typedef NS_ENUM(NSUInteger, TVOCallFeedbackIssue) {
     TVOCallFeedbackIssueChoppyAudio,     ///< Periodically, participants couldn’t hear each other. Some words were lost.
     TVOCallFeedbackIssueNoisyCall,       ///< There was disturbance, background noise, low clarity.
     TVOCallFeedbackIssueEcho             ///< There was echo during Call.
-};
+}
+NS_SWIFT_NAME(Call.FeedbackIssue);
 
 /**
  * Call quality warning types.
@@ -53,14 +56,16 @@ typedef NS_ENUM(NSUInteger, TVOCallQualityWarning) {
     TVOCallQualityWarningHighPacketsLostFraction, ///< High Packets lost fraction warning.
     TVOCallQualityWarningLowMos,                  ///< Low Mean Opinion Score warning.
     TVOCallQualityWarningConstantAudioInputLevel  ///< Constant audio level warning.
-};
+}
+NS_SWIFT_NAME(Call.QualityWarning);
 
 /**
  * `TVOCallGetStatsBlock` is invoked asynchronously when the results of the `<[TVOCall getStatsWithBlock:]>` method are available.
  *
  * @param statsReports A collection of `TVOStatsReport` objects
  */
-typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsReports);
+typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsReports)
+NS_SWIFT_NAME(Call.GetStatsBlock);
 
 /**
    The `TVOCall` class represents a signaling and media session between the host device and Twilio infrastructure.
@@ -316,6 +321,32 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
    </tr>
    </table>
  
+   The following peer connection state events are reported to Insights during a call:
+
+   <table border="1" summary="Insights peer connection state events">
+   <tr>
+   <td>Group Name</td><td>Event Name</td><td>Description</td><td>Since version</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>new</td><td>The PeerConnection ice connection state changed to "new".</td><td>6.0.0</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>connecting</td><td>The PeerConnection state changed to "connecting".</td><td>6.0.0</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>connected</td><td>The PeerConnection state changed to "connected".</td><td>6.0.0</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>disconnected</td><td>The PeerConnection state changed to "disconnected".</td><td>6.0.0</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>failed</td><td>The PeerConnection state changed to "failed".</td><td>6.0.0</td>
+   </tr>
+   <tr>
+   <td>pc-connection-state</td><td>closed</td><td>The PeerConnection state changed to "closed".</td><td>6.0.0</td>
+   </tr>
+   </table>
+
    The following ICE candidate event is reported to Insights during a call:
  
    <table border="1" summary="Insights ICE candidate events">
@@ -324,6 +355,9 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
    </tr>
    <tr>
    <td>ice-candidate</td><td>ice-candidate</td><td>ICE candidate events are raised when `OnIceCandidate` is called on the `PeerConnection`</td><td>4.1.0</td>
+   </tr>
+   <tr>
+   <td>ice-candidate</td><td>selected-ice-candidate-pair</td><td>The active local ICE candidate and remote ICE candidate</td><td>6.0.0</td>
    </tr>
    </table>
  
@@ -459,6 +493,7 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
    </tr>
    </table>
  */
+NS_SWIFT_NAME(Call)
 @interface TVOCall : NSObject
 
 /**
@@ -551,7 +586,8 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
  *
  * @param block The block to be invoked when the stats are available.
  */
-- (void)getStatsWithBlock:(nonnull TVOCallGetStatsBlock)block;
+- (void)getStatsWithBlock:(nonnull TVOCallGetStatsBlock)block
+NS_SWIFT_NAME(getStats(_:));
 
 /**
  * @brief Posts the feedback collected for this Call to Twilio.
@@ -564,7 +600,8 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
  * @see TVOCallFeedbackScore
  * @see TVOCallFeedbackIssue
  */
-- (void)postFeedback:(TVOCallFeedbackScore)score issue:(TVOCallFeedbackIssue)issue;
+- (void)postFeedback:(TVOCallFeedbackScore)score issue:(TVOCallFeedbackIssue)issue
+NS_SWIFT_NAME(postFeedback(score:issue:));
 
 /**
  * @brief Call cannot be instantiated directly. Use `[TVOCallInvite acceptWithOptions:delegate:]` and `[TwilioVoice connectWithOptions:delegate:]`.
@@ -585,6 +622,6 @@ typedef void (^TVOCallGetStatsBlock)(NSArray<TVOStatsReport *> * _Nonnull statsR
  * You can provide a UUID for outgoing calls using `<[TwilioVoice connectWithOptions:delegate:]>`.
  * Calls created via `<[TVOCallInvite acceptWithOptions:delegate:]>` inherit their `uuid` from the Invite itself.
  */
-@property (nonatomic, strong, readonly, nonnull) NSUUID *uuid;
+@property (nonatomic, strong, readonly, nullable) NSUUID *uuid;
 
 @end

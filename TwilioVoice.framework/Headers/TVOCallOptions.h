@@ -13,6 +13,7 @@
 /**
  *  `TVOCallOptionsBuilder` is a builder class for `TVOCallOptions`.
  */
+NS_SWIFT_NAME(CallOptionsBuilder)
 @interface TVOCallOptionsBuilder : NSObject
 
 /**
@@ -72,11 +73,11 @@
 @interface TVOCallOptionsBuilder (CallKit)
 
 /**
- *  @brief The CallKit identifier for the Call.
+ *  @brief The CallKit identifier for the Call. You must set this property if you are using CallKit to manage the Call.
  *
- *  @discussion This property allows you to provide your CallKit UUID as part of `TVOConnectOptions`. This is offered
- *  as a convenience if you wish to use `TVOCall` for CallKit book keeping. The UUID set here will be reflected on any
- *  `TVOCall` instance created with these options.
+ *  @discussion This property allows you to provide your CallKit UUID as part of `TVOConnectOptions` or `TVOAcceptOptions.
+ *  This is offered as a convenience if you wish to use `TVOCall` for CallKit book keeping. The UUID set here will be reflected on any
+ *  `TVOCall` instance created with these options. 
  */
 @property (nonatomic, strong, nullable) NSUUID *uuid;
 
@@ -88,6 +89,7 @@
  * Represents options available when connecting to a Call. Normally, this class is not used directly.
  * See TVOConnectOptions or TVOCAcceptOptions for example usage.
  */
+NS_SWIFT_NAME(CallOptions)
 @interface TVOCallOptions : NSObject
 
 /**
@@ -149,10 +151,10 @@
 @interface TVOCallOptions (CallKit)
 
 /**
- *  @brief The CallKit identifier for the Call.
+ *  @brief The CallKit identifier for the Call. You must set this property if you are using CallKit to manage the Call.
  *
- *  @discussion This property allows you to provide your CallKit UUID as part of `TVOCallOptions`. This is offered
- *  as a convenience if you wish to use `TVOCall` for CallKit book keeping. The UUID set here will be reflected on any
+ *  @discussion This property allows you to provide your CallKit UUID as part of `TVOConnectOptions` or `TVOAcceptOptions.
+ *  This is offered as a convenience if you wish to use `TVOCall` for CallKit book keeping. The UUID set here will be reflected on any
  *  `TVOCall` instance created with these options.
  */
 @property (nonatomic, strong, readonly, nullable) NSUUID *uuid;

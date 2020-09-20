@@ -14,6 +14,7 @@
  * Objects can conform to the `TVONotificationDelegate` protocol to be informed when incoming Call Invites are
  * received or cancelled.
  */
+NS_SWIFT_NAME(NotificationDelegate)
 @protocol TVONotificationDelegate <NSObject>
 
 /**
@@ -30,7 +31,8 @@
  *
  * @see TVOCallInvite
  */
-- (void)callInviteReceived:(nonnull TVOCallInvite *)callInvite;
+- (void)callInviteReceived:(nonnull TVOCallInvite *)callInvite
+NS_SWIFT_NAME(callInviteReceived(callInvite:));
 
 /**
  * @brief Notifies the delegate that a Cancelled Call Invite was received.
@@ -44,6 +46,7 @@
  *
  * @see TVOCancelledCallInvite
  */
-- (void)cancelledCallInviteReceived:(nonnull TVOCancelledCallInvite *)cancelledCallInvite error:(nonnull NSError *)error;
+- (void)cancelledCallInviteReceived:(nonnull TVOCancelledCallInvite *)cancelledCallInvite error:(nonnull NSError *)error
+NS_SWIFT_NAME(cancelledCallInviteReceived(cancelledCallInvite:error:));
 
 @end
