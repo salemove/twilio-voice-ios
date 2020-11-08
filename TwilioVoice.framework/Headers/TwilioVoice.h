@@ -147,6 +147,13 @@ NS_SWIFT_NAME(TwilioVoice.LogModule);
   ensure that push notifications will arrive via the APNs for the lifetime of the registration device token provided by
   the APNs instance.
 
+  Your app must initialize PKPushRegistry with PushKit push type VoIP at the launch time. As mentioned in the
+  [PushKit guidelines](https://developer.apple.com/documentation/pushkit/supporting_pushkit_notifications_in_your_app),
+  the system can't deliver push notifications to your app until you create a PKPushRegistry object for
+  VoIP push type and set the delegate. If your app delays the initialization of PKPushRegistry, your app may receive outdated
+  PushKit push notifications, and if your app decides not to report the received outdated push notifications to CallKit, iOS may
+  terminate your app.
+
   If the registration is successful the completion handler will contain a `Null NSError`. If the registration
   fails, the completion handler will have a `nonnull NSError` with `UserInfo` string describing the reason for failure.
 

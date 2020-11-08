@@ -8,7 +8,7 @@
 #import "TVOAudioFormat.h"
 
 typedef void* TVOAudioDeviceContext
-NS_SWIFT_NAME(AudioDevice.Context);
+NS_SWIFT_NAME(AudioDeviceContext);
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +56,7 @@ NS_SWIFT_NAME(AudioDeviceReadRenderData(context:data:sizeInBytes:));
  *  A block which is executed on the media engine's worker thread.
  */
 typedef void (^ TVOAudioDeviceWorkerBlock)(void)
-NS_SWIFT_NAME(AudioDevice.WorkerBlock);
+NS_SWIFT_NAME(AudioDeviceWorkerBlock);
 
 /**
  *  A utility method to execute a block on the media engine's worker thread asynchronously.
