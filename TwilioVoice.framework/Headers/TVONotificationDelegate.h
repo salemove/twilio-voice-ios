@@ -24,7 +24,7 @@ NS_SWIFT_NAME(NotificationDelegate)
 /**
  * @brief Notifies the delegate that a Call Invite was received.
  *
- * @discussion This method gets invoked synchronously on the same dispatch queue where the `[TwilioVoice handleNotification:delegate:delegateQueue:]`
+ * @discussion This method gets invoked synchronously on the same dispatch queue where the `[TwilioVoiceSDK handleNotification:delegate:delegateQueue:]`
  * is called.
  *
  * @param callInvite A `<TVOCallInvite>` object.
@@ -38,7 +38,7 @@ NS_SWIFT_NAME(callInviteReceived(callInvite:));
  * @brief Notifies the delegate that a Cancelled Call Invite was received.
  *
  * @discussion A Cancelled Call Invite has the terminal state and can not perform further actions.
- * This method gets invoked synchronously on the same dispatch queue where the `[TwilioVoice handleNotification:delegate:delegateQueue:]`
+ * This method gets invoked synchronously on the same dispatch queue where the `[TwilioVoiceSDK handleNotification:delegate:delegateQueue:]`
  * is called.
  *
  * @param cancelledCallInvite A `<TVOCancelledCallInvite>` object.

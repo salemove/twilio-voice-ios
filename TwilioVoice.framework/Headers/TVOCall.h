@@ -69,7 +69,7 @@ NS_SWIFT_NAME(Call.GetStatsBlock);
 
 /**
    The `TVOCall` class represents a signaling and media session between the host device and Twilio infrastructure.
-   Calls can represent an outbound call initiated from the SDK via `<[TwilioVoice connectWithAccessToken:delegate:]>`
+   Calls can represent an outbound call initiated from the SDK via `<[TwilioVoiceSDK connectWithAccessToken:delegate:]>`
    or an incoming call accepted via a `<[TVOCallInvite acceptWithDelegate:]>`. Devices that initiate an outbound
    call represent the caller and devices that receive a `<TVOCallInvite>` represent the callee.
  
@@ -504,7 +504,7 @@ NS_SWIFT_NAME(Call)
  * @brief `From` value of the Call.
  *
  * @discussion This may be `nil` if the call object was created by calling the 
- * `<[TwilioVoice connectWithOptions:delegate:]>` method or if the call object was
+ * `<[TwilioVoiceSDK connectWithOptions:delegate:]>` method or if the call object was
  * created by calling the `<[TVOCallInvite acceptWithOptions:delegate:]>` method
  * where the `from` value of the `TVOCallInvite` object was also `nil`.
  */
@@ -514,7 +514,7 @@ NS_SWIFT_NAME(Call)
  * @brief `To` value of the Call.
  *
  * @discussion This may be `nil` if the call object was created by calling the 
- * `<[TwilioVoice connectWithOptions:delegate:]>` method.
+ * `<[TwilioVoiceSDK connectWithOptions:delegate:]>` method.
  */
 @property (nonatomic, strong, readonly, nullable) NSString *to;
 
@@ -604,9 +604,9 @@ NS_SWIFT_NAME(getStats(_:));
 NS_SWIFT_NAME(postFeedback(score:issue:));
 
 /**
- * @brief Call cannot be instantiated directly. Use `[TVOCallInvite acceptWithOptions:delegate:]` and `[TwilioVoice connectWithOptions:delegate:]`.
+ * @brief Call cannot be instantiated directly. Use `[TVOCallInvite acceptWithOptions:delegate:]` and `[TwilioVoiceSDK connectWithOptions:delegate:]`.
  */
-- (null_unspecified instancetype)init __attribute__((unavailable("A `TVOCall` object cannot be instantiated directly. See `[TVOCallInvite acceptWithOptions:delegate:]` or `[TwilioVoice connectWithOptions:delegate:]`")));
+- (null_unspecified instancetype)init __attribute__((unavailable("A `TVOCall` object cannot be instantiated directly. See `[TVOCallInvite acceptWithOptions:delegate:]` or `[TwilioVoiceSDK connectWithOptions:delegate:]`")));
 
 @end
 
@@ -619,7 +619,7 @@ NS_SWIFT_NAME(postFeedback(score:issue:));
  * @brief A unique identifier for the Call.
  *
  * @discussion Use this UUID as an argument to CallKit methods.
- * You can provide a UUID for outgoing calls using `<[TwilioVoice connectWithOptions:delegate:]>`.
+ * You can provide a UUID for outgoing calls using `<[TwilioVoiceSDK connectWithOptions:delegate:]>`.
  * Calls created via `<[TVOCallInvite acceptWithOptions:delegate:]>` inherit their `uuid` from the Invite itself.
  */
 @property (nonatomic, strong, readonly, nullable) NSUUID *uuid;

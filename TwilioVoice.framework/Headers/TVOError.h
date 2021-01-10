@@ -9,7 +9,7 @@
 #define TVOError_h
 
 FOUNDATION_EXPORT NSString * _Nonnull const kTVOErrorDomain
-NS_SWIFT_NAME(TwilioVoice.ErrorDomain);
+NS_SWIFT_NAME(TwilioVoiceSDK.ErrorDomain);
 
 /**
  * An enumeration indicating the errors that can be raised by the SDK.
@@ -67,6 +67,6 @@ typedef NS_ERROR_ENUM(kTVOErrorDomain, TVOError) {
     TVOErrorMediaConnectionError                          = 53405,    ///< Media connection failed
     TVOMediaDtlsTransportFailedErrorCode                  = 53407,    ///< Media connection failed due to DTLS handshake failure
 }
-NS_SWIFT_NAME(TwilioVoice.Error);
+NS_SWIFT_NAME(TwilioVoiceSDK.Error);
 
 #endif

@@ -24,7 +24,7 @@ NS_SWIFT_NAME(CallInvite)
 /**
  * @brief `From` value of the Call Invite.
  *
- * @discussion This may be `nil` if the notification passed in `<[TwilioVoice handleNotification:delegate:delegateQueue:]>`
+ * @discussion This may be `nil` if the notification passed in `<[TwilioVoiceSDK handleNotification:delegate:delegateQueue:]>`
  * method does not have valid information in it.
  */
 @property (nonatomic, copy, readonly, nullable) NSString *from;
@@ -407,7 +407,7 @@ NS_SWIFT_NAME(accept(options:delegate:));
 
 /**
  * @brief Returns `true` if the provided payload would result in a `TVOCallInvite` via the `[TVONotificationDelegate callInviteReceived:]`
- * callback when passed into `[TwilioVoice handleNotification:delegate:delegateQueue:]`.
+ * callback when passed into `[TwilioVoiceSDK handleNotification:delegate:delegateQueue:]`.
  *
  * @param payload Push notification payload.
  */

@@ -108,7 +108,7 @@ NS_SWIFT_NAME(DefaultAudioDevice)
 
       TVODefaultAudioDevice *audioDevice = [TVODefaultAudioDevice audioDevice];
 
-      TwilioVoice.audioDevice = audioDevice;
+      TwilioVoiceSDK.audioDevice = audioDevice;
 
       //...connect to a Call with audioDevice. By default the audio route will be configured to receiver.
 
@@ -157,7 +157,7 @@ NS_SWIFT_NAME(DefaultAudioDevice)
  
    The following example demonstrates connecting to a Call using the AVAudioSessionCategoryPlayback category:
 
-      TwilioVoice.audioDevice = [TVODefaultAudioDevice audioDeviceWithBlock:^ {
+      TwilioVoiceSDK.audioDevice = [TVODefaultAudioDevice audioDeviceWithBlock:^ {
           // We will execute `kTVODefaultAVAudioSessionConfigurationBlock` first.
           kTVODefaultAVAudioSessionConfigurationBlock();
 
@@ -177,7 +177,7 @@ NS_SWIFT_NAME(DefaultAudioDevice)
           // configure builder attributes here
       }];
 
-      TVOCall *call = [TwilioVoice connectWithOptions:connectOptions];
+      TVOCall *call = [TwilioVoiceSDK connectWithOptions:connectOptions];
  */
 + (nonnull instancetype)audioDeviceWithBlock:(TVOAVAudioSessionConfigurationBlock _Nonnull )block;
 

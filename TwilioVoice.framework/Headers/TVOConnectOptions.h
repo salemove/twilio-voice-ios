@@ -20,7 +20,7 @@
          builder.enableIceGatheringOnAnyAddressPorts = true
      }
  
-     let call = TwilioVoice.connect(with: connectOptions, delegate: callDelegate)
+     let call = TwilioVoiceSDK.connect(with: connectOptions, delegate: callDelegate)
    ```
  */
 NS_SWIFT_NAME(ConnectOptionsBuilder)
@@ -59,7 +59,7 @@ NS_SWIFT_NAME(ConnectOptionsBuilder.Block);
          builder.enableIceGatheringOnAnyAddressPorts = true
      }
  
-     let call = TwilioVoice.connect(with: connectOptions, delegate: callDelegate)
+     let call = TwilioVoiceSDK.connect(with: connectOptions, delegate: callDelegate)
    ```
  
    @see TVOCallOptions

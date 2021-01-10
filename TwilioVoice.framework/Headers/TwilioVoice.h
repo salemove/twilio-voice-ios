@@ -47,10 +47,10 @@ typedef NS_ENUM(NSUInteger, TVOLogLevel) {
     TVOLogLevelTrace,       ///< Show low-level debugging messages as well as all **Debug** log messages.
     TVOLogLevelAll          ///< Show all logging.
 }
-NS_SWIFT_NAME(TwilioVoice.LogLevel);
+NS_SWIFT_NAME(TwilioVoiceSDK.LogLevel);
 
 /**
- * `TwilioVoice` logging modules.
+ * `TwilioVoiceSDK` logging modules.
  */
 typedef NS_ENUM(NSUInteger, TVOLogModule) {
     TVOLogModuleCore = 0,   ///< Voice Core SDK.
@@ -58,18 +58,18 @@ typedef NS_ENUM(NSUInteger, TVOLogModule) {
     TVOLogModuleSignaling,  ///< Signaling module.
     TVOLogModuleWebRTC      ///< WebRTC module.
 }
-NS_SWIFT_NAME(TwilioVoice.LogModule);
+NS_SWIFT_NAME(TwilioVoiceSDK.LogModule);
 
 /**
- * `TwilioVoice` is the entry point to the Twilio Voice SDK. You can register for VoIP push notifications, make outgoing
+ * `TwilioVoiceSDK` is the entry point to the Twilio Voice SDK. You can register for VoIP push notifications, make outgoing
  * Calls, receive Call invites and set audio device to use in a Call using this class.
  */
-@interface TwilioVoice : NSObject
+@interface TwilioVoiceSDK : NSObject
 
 /**
  * @brief The current logging level used by the SDK.
  *
- * @discussion The default logging level is `TVOLogLevelError`. `TwilioVoice` and its components use NSLog internally.
+ * @discussion The default logging level is `TVOLogLevelError`. `TwilioVoiceSDK` and its components use NSLog internally.
  *
  * @see TVOLogLevel
  */
@@ -89,7 +89,7 @@ NS_SWIFT_NAME(TwilioVoice.LogModule);
    @discussion The default value `roaming` automatically selects an edge based on the latency between client and
    available edges. `roaming` requires the upstream DNS to support [RFC7871](https://tools.ietf.org/html/rfc7871). See [Global Low Latency requirements](https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#global-low-latency-requirements) for more information.
  
-   `edge` value must be specified before calling TwilioVoice.handleNotification().
+   `edge` value must be specified before calling TwilioVoiceSDK.handleNotification().
 
    See the [new Edge names](https://www.twilio.com/docs/voice/client/regions#regions) for possible values.
  */
@@ -246,9 +246,9 @@ NS_SWIFT_NAME(TwilioVoice.LogModule);
     - (void)pushRegistry:(PKPushRegistry *)registry
     didUpdatePushCredentials:(PKPushCredentials *)credentials
              forType:(NSString *)type {
-        [TwilioVoice registerWithAccessToken:accessToken
-                                 deviceToken:credentials.token
-                                  completion:^(NSError *error) {
+        [TwilioVoiceSDK registerWithAccessToken:accessToken
+                                    deviceToken:credentials.token
+                                     completion:^(NSError *error) {
             if(error != nil) {
                 NSLog("Failed to register for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
             } else {
@@ -364,9 +364,9 @@ NS_SWIFT_NAME(register(accessToken:deviceToken:completion:));
    ** An example of using the *unregistration* API **
  
    ```
-     [TwilioVoice unregisterWithAccessToken:accessToken
-                                deviceToken:deviceToken
-                                 completion:^(NSError *error) {
+     [TwilioVoiceSDK unregisterWithAccessToken:accessToken
+                                   deviceToken:deviceToken
+                                    completion:^(NSError *error) {
          if(error != nil) {
              NSLog("Failed to unregister for incoming push: %@\n\t  - reason: %@", [error localizedDescription], [error localizedFailureReason]);
          } else {
@@ -394,7 +394,7 @@ NS_SWIFT_NAME(unregister(accessToken:deviceToken:completion:));
    @discussion This method will synchronously process call notification payload and call the provided delegate
    on the same dispatch queue.
  
-   @discussion If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
+   @discussion If you are specifying an edge value via the `TwilioVoiceSDK.edge` property you must do so before calling this method.
  
    Twilio sends a `call` notification via Apple VoIP Service.
    The notification type is encoded in the dictionary with the key `twi_message_type` and the value
@@ -455,7 +455,7 @@ NS_SWIFT_NAME(unregister(accessToken:deviceToken:completion:));
             NSLog(@"Received incoming push: %@", payload.dictionaryPayload);
  
             if ([type isEqualToString:PKPushTypeVoIP]) {
-                if (![TwilioVoice handleNotification:payload.dictionaryPayload delegate:self]) {
+                if (![TwilioVoiceSDK handleNotification:payload.dictionaryPayload delegate:self]) {
                     NSLog(@"The push notification was not a Twilio Voice push notification");
             }
         }
@@ -495,7 +495,7 @@ NS_SWIFT_NAME(unregister(accessToken:deviceToken:completion:));
    @discussion This method is guaranteed to return a `<TVOCall>` object. It's possible for the returned Call to either
    succeed or fail to connect.
  
-   If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
+   If you are specifying an edge value via the `TwilioVoiceSDK.edge` property you must do so before calling this method.
  
    The `<TVOCallDelegate>` will receive the Call state update callbacks. The callbacks are listed here.
  
@@ -692,7 +692,7 @@ NS_SWIFT_NAME(unregister(accessToken:deviceToken:completion:));
     // ViewController setup and other code ...
  
     - (void)makeCall:(NSString*)accessToken
-        self.call = [TwilioVoice connectWithAccessToken:accessToken delegate:self];
+        self.call = [TwilioVoiceSDK connectWithAccessToken:accessToken delegate:self];
     }
  
     #pragma mark - TVOCallDelegate
@@ -742,7 +742,7 @@ NS_SWIFT_NAME(connect(accessToken:delegate:));
    @discussion This method is guaranteed to return a `<TVOCall>` object. It's possible for the returned Call to either
    succeed or fail to connect. Use the `<TVOConnectOptions>` builder to specify Call parameters and UUID.
  
-   @discussion If you are specifying an edge value via the `TwilioVoice.edge` property you must do so before calling this method.
+   @discussion If you are specifying an edge value via the `TwilioVoiceSDK.edge` property you must do so before calling this method.
  
    The `<TVOCallDelegate>` will receive the Call state update callbacks. The callbacks are same as `connectWithAccessToken:delegate:` API.
  
@@ -799,7 +799,7 @@ NS_SWIFT_NAME(connect(accessToken:delegate:));
                 builder.uuid = uuid;
         }];
  
-        self.call = [TwilioVoice connectWithOptions:connectOptions delegate:self];
+        self.call = [TwilioVoiceSDK connectWithOptions:connectOptions delegate:self];
     }
  
     #pragma mark - TVOCallDelegate
@@ -840,7 +840,7 @@ NS_SWIFT_NAME(connect(accessToken:delegate:));
                                delegate:(nonnull id<TVOCallDelegate>)delegate
 NS_SWIFT_NAME(connect(options:delegate:));
 
-- (null_unspecified instancetype)init __attribute__((unavailable("TwilioVoice cannot be instantiated directly.")));
+- (null_unspecified instancetype)init __attribute__((unavailable("TwilioVoiceSDK cannot be instantiated directly.")));
 
 @end
 
@@ -848,6 +848,6 @@ NS_SWIFT_NAME(connect(options:delegate:));
 /**
  * CallKit Audio Session Handling
  */
-@interface TwilioVoice (CallKitIntegration)
+@interface TwilioVoiceSDK (CallKitIntegration)
 
 @end
