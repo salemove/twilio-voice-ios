@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
   s.name             = 'TwilioVoice'
-  s.version          = '6.3.0.g'
+  s.version          = '6.3.1.g'
   s.summary          = 'Twilio Voice'
   s.description      = 'Twilio Voice makes it easy to embed VoIP directly into your iOS apps.'
   s.homepage         = 'http://www.twilio.com/docs/api/voice-sdk'
   s.license          = { :type => 'Commercial', :text => 'Copyright © 2011-2017 Twilio, Inc. All rights reserved. Use of this software is subject to the terms and conditions of the Twilio Terms of Service located at http://www.twilio.com/legal/tos' }
   s.author           = { 'Twilio' => 'help@twilio.com' }
-  s.source           = { :git => 'https://github.com/salemove/twilio-voice-ios.git', :tag => '6.3.0' }
+  s.source           = { :git => 'https://github.com/salemove/twilio-voice-ios.git', :tag => '6.3.1' }
 
-  s.documentation_url = 'https://twilio.github.io/twilio-voice-ios/docs/6.3.0'
+  s.documentation_url = 'https://twilio.github.io/twilio-voice-ios/docs/6.3.1'
 
   s.module_name = 'TwilioVoice'
   s.ios.deployment_target = '10.0'
